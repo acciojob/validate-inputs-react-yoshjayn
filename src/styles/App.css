@@ -1,1 +1,29 @@
 
+
+div{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap:7px;
+    color: rgb(129, 129, 129);
+}
+
+input{
+    border-radius: 15px;
+    height: 25px;
+    border-color: rgb(129, 129, 129);
+}
+
+button{
+    background-color: rgb(31, 167, 121);
+    color: white;
+    padding: 5px;
+    border-radius: 15px;
+    align-self: flex-end;
+}
+.errorMessage{
+    color: red;
+}
+#success{
+    color:green;
+}
