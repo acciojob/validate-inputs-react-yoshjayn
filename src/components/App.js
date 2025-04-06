@@ -8,7 +8,6 @@ function App() {
     email: "",
     mobile: ""
   });
-  let { name, address, email, mobile } = user;
 
   const [errors, setErrors] = useState({
     name: "",
@@ -16,6 +15,7 @@ function App() {
     email: "",
     mobile: ""
   });
+
   const [success, setSuccess] = useState("");
 
   function handleSubmit(e) {
@@ -28,14 +28,18 @@ function App() {
       mobile: ""
     };
 
-    // Name validation
-    if (![...name].every(char => (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' ')) {
+    // Name validation - only letters and spaces
+    if (![...user.name].every(char => 
+      (char >= 'A' && char <= 'Z') || 
+      (char >= 'a' && char <= 'z') || 
+      char === ' '
+    )) {
       newErrors.name = "Name should contain only letters";
       isValid = false;
     }
 
-    // Address validation
-    if (![...address].every(char => 
+    // Address validation - letters, numbers, and spaces
+    if (![...user.address].every(char => 
       (char >= 'A' && char <= 'Z') || 
       (char >= 'a' && char <= 'z') || 
       (char >= '0' && char <= '9') ||
@@ -45,25 +49,20 @@ function App() {
       isValid = false;
     }
 
-    // Email validation
-    if (!(email.includes('@') && email.includes('.com'))) {
+    // Email validation - must contain @ and .com
+    if (!(user.email.includes('@') && user.email.includes('.com'))) {
       newErrors.email = "Email should contain @ and .com";
       isValid = false;
     }
 
-    // Mobile validation
-    if (mobile.length > 10) {
+    // Mobile validation - max 10 digits
+    if (user.mobile.length > 10) {
       newErrors.mobile = "Mobile number should not be more than 10 characters";
       isValid = false;
     }
 
     setErrors(newErrors);
-
-    if (isValid) {
-      setSuccess("Form submitted!");
-    } else {
-      setSuccess("");
-    }
+    setSuccess(isValid ? "Form submitted!" : "");
   }
 
   return (
@@ -72,38 +71,34 @@ function App() {
       <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input 
-          onChange={(e) => setUser({ ...user, name: e.target.value })} 
-          name="name" 
-          value={name}
+          onChange={(e) => setUser({...user, name: e.target.value})} 
+          value={user.name}
         />
-        {errors.name && <span className="errorMessage">{errors.name}</span>}
-        <br/>
+        <span className="errorMessage">{errors.name}</span>
+        
         <label>Address</label>
         <input  
-          onChange={(e) => setUser({ ...user, address: e.target.value })} 
-          name="address" 
-          value={address}
+          onChange={(e) => setUser({...user, address: e.target.value})} 
+          value={user.address}
         />
-        {errors.address && <span className="errorMessage">{errors.address}</span>}
-        <br/>
+        <span className="errorMessage">{errors.address}</span>
+        
         <label>Email</label>
         <input 
-          onChange={(e) => setUser({ ...user, email: e.target.value })} 
-          name="email" 
-          value={email}
+          onChange={(e) => setUser({...user, email: e.target.value})} 
+          value={user.email}
         />
-        {errors.email && <span className="errorMessage">{errors.email}</span>}
-        <br/>
+        <span className="errorMessage">{errors.email}</span>
+        
         <label>Mobile</label>
         <input 
-          type='number' 
-          onChange={(e) => setUser({ ...user, mobile: e.target.value })} 
-          name="mobile" 
-          value={mobile}
+          type="number"
+          onChange={(e) => setUser({...user, mobile: e.target.value})} 
+          value={user.mobile}
         />
-        {errors.mobile && <span className="errorMessage">{errors.mobile}</span>}
+        <span className="errorMessage">{errors.mobile}</span>
         
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
